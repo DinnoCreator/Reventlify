@@ -4,6 +4,8 @@ import Hero from "../components/home/hero/Hero";
 import Search from "../components/home/search/Search";
 import { useState } from "react";
 import Filter from "../components/home/upcomin_events/Filter";
+import Cards from "../components/home/cards/Cards";
+import CreateEvents from "../components/home/events/CreateEvents";
 
 const Home = () => {
   const [state, setState] = useState("CROSS-RIVER");
@@ -22,6 +24,8 @@ const Home = () => {
         </div>
       </Background>
       <Filter />
+      <Cards />
+      <CreateEvents />
     </>
   );
 };
