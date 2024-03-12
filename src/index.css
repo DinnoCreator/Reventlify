@@ -16,7 +16,7 @@ body {
 }
 
 .eddyContainer {
-  @apply  px-3 mx-auto max-w-[400px] md:max-w-[700px] xl:max-w-[1000px];
+  @apply  px-3 mx-auto max-w-[400px] md:max-w-[1000px];
 }
 
 .customizedInput {
