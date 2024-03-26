@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -116,12 +116,13 @@ const NavBar = () => {
             </NavLink>
           </div>
           <div className="block mt-4 md:mt-0 md:inline-block text-white mr-8">
-            <div
+            <Link
+            to="/sign-in"
               // type="button"
               className="cursor-pointer w-fit hover:text-[#f5167e] px-4 py-[0.1rem] rounded-[40px] border-solid hover:border-[#f5167e] border-white border-2"
             >
               Login
-            </div>
+            </Link>
           </div>
         </div>
       </nav>
