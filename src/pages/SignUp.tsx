@@ -30,17 +30,17 @@ const SignUp = () => {
           <h2>Home</h2>
         </div>
         </Link>
-        <div className="flex-col justify-center items-center  md:mt-10 mt-5 md:w-[35%] mx-auto">
-          <h2 className="text-3xl font-bold text-blue-600 text-center">
+        <div className="flex-col justify-center items-center  mt-16 px-6 md:w-[35%] mx-auto">
+          <h2 className="text-3xl font-bold text-blue-600 text-center mb-2">
             Reventlify
           </h2>
           <p className="text-2xl text-center font-bold">
             Never miss the fun...
           </p>
-          <form>
+          <form className="mt-6">
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
-              <div className="my-2">
-                <label htmlFor="exampleInputEmail1">Email address</label>
+              <div className="my-3">
+                <label htmlFor="exampleInputEmail1" className="font-normal">Email address</label>
                 <motion.input
                   type="email"
                   id="exampleInputEmail1"
@@ -54,8 +54,8 @@ const SignUp = () => {
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
-              <div className="my-2">
-                <label htmlFor="exampleInputEmail1">Username</label>
+              <div className="my-3">
+                <label htmlFor="exampleInputEmail1" className="font-normal">Username</label>
                 <motion.input
                   type="text"
                   id="exampleInputEmail1"
@@ -69,8 +69,8 @@ const SignUp = () => {
             </motion.div>
 
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
-              <div className="my-2">
-                <label htmlFor="exampleInputPassword1">Password</label>
+              <div className="my-3">
+                <label htmlFor="exampleInputPassword1" className="font-normal">Password</label>
                 <div className="flex space-x-2 items-center mt-2">
                   <input
                     type={type}
