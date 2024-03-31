@@ -17,7 +17,7 @@ const Reset = () => {
   };
 
   return (
-    <div className="eddyContainer">
+    <div className="eddyContainer px">
       <Link to="/">
         <div className="flex space-x-1 items-center mt-5 text-xl font-bold">
           <div>
@@ -26,17 +26,17 @@ const Reset = () => {
           <h2>Home</h2>
         </div>
       </Link>
-      <div className="flex-col justify-center items-center  md:mt-10 mt-5 md:w-[35%] mx-auto">
-        <h2 className="text-3xl font-bold text-blue-600 text-center">
+      <div className="flex-col justify-center items-center px-6 mt-16 md:w-[35%] mx-auto">
+        <h2 className="md:text-3xl text-2xl font-bold text-blue-600 text-center mb-2">
           Reventlify
         </h2>
-        <p className="text-2xl text-center font-bold">Never miss the fun...</p>
-        <form>
+        <p className="md:text-2xl text-xl text-center font-bold ">Never miss the fun...</p>
+        <form className="mt-6">
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
             <div className="my-2">
               {verifyEmail && !resetPassword ? (
                 <>
-                  <label htmlFor="exampleOTP">Input OTP</label>
+                  <label htmlFor="exampleOTP" className="font-bold">Input OTP</label>
                   <motion.input
                     type="text"
                     id="exampleOTP"
@@ -49,7 +49,7 @@ const Reset = () => {
                 </>
               ) : verifyEmail && resetPassword ? (
                 <>
-                  <label htmlFor="exampleInputEmail1">
+                  <label htmlFor="exampleInputEmail1" className="font-bold">
                     Create new password
                   </label>
                   <motion.input
@@ -64,7 +64,7 @@ const Reset = () => {
                 </>
               ) : (
                 <>
-                  <label htmlFor="exampleInputEmail1">Email address</label>
+                  <label htmlFor="exampleInputEmail1" className="font-bold">Email address</label>
                   <motion.input
                     type="email"
                     id="exampleInputEmail1"
@@ -80,13 +80,17 @@ const Reset = () => {
           </motion.div>
 
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
-            <div className="text-center text-white px-2 py-2 bg-blue-600 rounded-xl my-6">
-              <button onClick={Reseter} type="submit">
-                {verifyEmail
+            <div>
+              <button
+                onClick={Reseter}
+                type="submit"
+                className="text-center text-white px-2 py-2 bg-blue-600 rounded-xl my-6 w-full"
+              >
+                {verifyEmail && !resetPassword
                   ? "Verify OTP"
                   : verifyEmail && resetPassword
                   ? "Set new password"
-                  : "Verify Email"}
+                  : "Send OTP"}
               </button>
             </div>
           </motion.div>
