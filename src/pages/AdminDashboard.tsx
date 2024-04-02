@@ -1,13 +1,15 @@
 import Layout from "../components/admin/layout/index";
-import Header from "../components/admin/header/index";
 
+import DashboardDisplay from "../components/admin/dashboard";
 
 const AdminDashboard = () => {
   return (
-    <Layout>
-      <Header/>
-    </Layout>
-  )
-}
+    <>
+      <Layout>
+        <DashboardDisplay />
+      </Layout>
+    </>
+  );
+};
 
 export default AdminDashboard;
