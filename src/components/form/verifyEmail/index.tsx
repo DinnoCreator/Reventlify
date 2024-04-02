@@ -7,12 +7,14 @@ interface VerifyEmailDisplayProps {
   setOtp: Dispatch<SetStateAction<string>>;
   verifyEmail: any;
   error: string;
+  loading: boolean;
 }
 
 const VerifyEmailDisplay = ({
   setOtp,
   verifyEmail,
   error,
+  loading,
 }: VerifyEmailDisplayProps) => {
   const handleVerifyEmail = async (e: any) => {
     e.preventDefault();
@@ -57,9 +59,15 @@ const VerifyEmailDisplay = ({
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
             <button
               type="submit"
-              className={`text-center text-white px-2 py-2 bg-blue-600 rounded-xl my-6 w-full`}
+              className={`text-center w-full text-white px-2 py-2 bg-blue-600 rounded-xl my-6 ${
+                loading ? "opacity-50" : ""
+              }`}
+              disabled={loading}
             >
-              verify OTP
+              {
+                loading ? " verifying....." : "verify OTP"
+              }
+              
             </button>
           </motion.div>
         </form>

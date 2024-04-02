@@ -59,6 +59,7 @@ const SignUp = () => {
       const data = await response.json();
 
       if (response.status === 200) {
+        setError("");
         setLoading(false);
         navigate("/sign-in");
       } else {
@@ -87,6 +88,7 @@ const SignUp = () => {
           setOtp={setOtp}
           verifyEmail={verifyEmail}
           error={error}
+          loading={loading}
         />
       )}
     </div>
