@@ -61,11 +61,7 @@ const SendCodeDisplay = ({
         </h2>
         <p className="text-2xl text-center font-bold">Never miss the fun...</p>
         <form className="mt-6" onSubmit={handleSubmit}>
-          {error ? (
-            <div className="text-xl text-red-500 mb-3">{error}</div>
-          ) : (
-            ""
-          )}
+          {error && <div className="text-xl text-red-500 mb-3">{error}</div>}
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
             <div className="my-3">
               <label htmlFor="exampleInputEmail1" className="font-normal">
@@ -94,7 +90,7 @@ const SendCodeDisplay = ({
               <motion.input
                 type="text"
                 id="exampleInputEmail1"
-                autoComplete="off"
+                autoComplete="new-username"
                 aria-describedby="emailHelp"
                 className="block mt-2 w-full rounded-xl p-2"
                 required
@@ -116,7 +112,7 @@ const SendCodeDisplay = ({
                   type={type}
                   id="exampleInputPassword1"
                   className=" w-[95%] rounded-xl p-2"
-                  autoComplete="off"
+                  autoComplete="new-password"
                   minLength={8}
                   required
                   onChange={(e) =>

@@ -4,17 +4,15 @@ import { Link } from "react-router-dom";
 import { Dispatch, SetStateAction } from "react";
 
 interface VerifyEmailDisplayProps {
-  otp: string;
   setOtp: Dispatch<SetStateAction<string>>;
   verifyEmail: any;
   error: string;
 }
 
 const VerifyEmailDisplay = ({
-  otp,
   setOtp,
   verifyEmail,
-  error
+  error,
 }: VerifyEmailDisplayProps) => {
   const handleVerifyEmail = async (e: any) => {
     e.preventDefault();
@@ -36,11 +34,7 @@ const VerifyEmailDisplay = ({
         </h2>
         <p className="text-2xl text-center font-bold">Never miss the fun...</p>
         <form className="mt-6" onSubmit={handleVerifyEmail}>
-        {error ? (
-            <div className="text-xl text-red-500 mb-3">{error}</div>
-          ) : (
-            ""
-          )}
+          {error && <div className="text-xl text-red-500 mb-3">{error}</div>}
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
             <div className="my-3">
               <label htmlFor="exampleInputEmail1" className="font-normal">
@@ -49,15 +43,13 @@ const VerifyEmailDisplay = ({
               <motion.input
                 type="text"
                 id="exampleInputText1"
-                autoComplete="off"
+                autoComplete="code"
                 aria-describedby="emailHelp"
                 className="block mt-2 w-full rounded-xl p-2"
                 minLength={5}
                 maxLength={5}
                 required
-                onChange={(e) =>
-                  setOtp(e.target.value)
-                }
+                onChange={(e) => setOtp(e.target.value)}
                 whileFocus={{ scale: 1.1 }}
               ></motion.input>
             </div>

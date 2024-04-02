@@ -11,7 +11,7 @@ const SignUp = () => {
     userName: "",
     password: "",
   });
-  const [sendCodeDis] = useState(true);
+  const sendCodeDis = true;
   const [verifyEmailDis, setVerifyEmailDis] = useState(false);
   const [error, setError] = useState("");
   const [otp, setOtp] = useState("");
@@ -32,8 +32,9 @@ const SignUp = () => {
       const data = await response.json();
 
       if (response.status === 200) {
+        setError("");
         setLoading(false);
-        setVerifyEmailDis(true);
+        return setVerifyEmailDis(true);
       } else {
         setError(data.message);
         return setLoading(false);
@@ -53,7 +54,7 @@ const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email:email, code: otp }),
+        body: JSON.stringify({ email: email, code: otp }),
       });
       const data = await response.json();
 
@@ -81,15 +82,12 @@ const SignUp = () => {
           loading={loading}
           error={error}
         />
-      ) : sendCodeDis && verifyEmailDis ? (
+      ) : (
         <VerifyEmailDisplay
-          otp={otp}
           setOtp={setOtp}
           verifyEmail={verifyEmail}
           error={error}
         />
-      ) : (
-        ""
       )}
     </div>
   );
