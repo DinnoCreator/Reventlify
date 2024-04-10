@@ -46,7 +46,7 @@ const InputOtp = ({
           }`}
           disabled={loading}
         >
-          {loading ? "verifying....." : "verify OTP"}
+          {loading ? "Verifying....." : "Verify OTP"}
         </button>
       </motion.div>
     </div>

@@ -30,6 +30,7 @@ const NewPassword = ({
         className="block mt-2 w-full rounded-xl p-2"
         onChange={(e) => setNewPassword(e.target.value)}
         required
+        minLength={8}
         whileFocus={{ scale: 1.1 }}
       ></motion.input>
        </div>
@@ -44,7 +45,7 @@ const NewPassword = ({
           }`}
           disabled={loading}
         >
-          {loading ? "setting new password....." : "set new password"}
+          {loading ? "Creating....." : "Create"}
         </button>
       </motion.div>
     </div>
