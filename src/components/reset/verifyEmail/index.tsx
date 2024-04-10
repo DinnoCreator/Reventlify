@@ -43,7 +43,7 @@ const VerifyEmail = ({
           }`}
           disabled={loading}
         >
-          {loading ? "sending OTP....." : "send OTP"}
+          {loading ? "Sending OTP....." : "Send OTP"}
         </button>
       </motion.div>
     </div>
