@@ -12,7 +12,7 @@ const Ticket = () => {
           </div>
           <h3 className="text-center flex-grow ">#0451233345</h3>
         </div>
-        <div className="eddyContainer rounded-t-3xl bg-BuyTicket bg-cover bg-no-repeat bg-center mt-5 mx-auto w-full h-[30vh]"></div>
+        <div className="eddyContainer rounded-t-3xl bg-BuyTicket bg-cover bg-no-repeat bg-center mt-5 mx-auto w-full h-[25vh]"></div>
         <div className="bg-white py-4 eddyContainer rounded-b-[-24px] h-[35vh]">
           <h3 className="font-bold text-base">
             Wonder Girls World Tour San Francisco
