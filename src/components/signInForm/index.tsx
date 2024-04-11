@@ -1,28 +1,30 @@
-import { IoIosArrowBack } from "react-icons/io";
-import { IoMdEyeOff } from "react-icons/io";
-import { IoIosEye } from "react-icons/io";
+import { IoIosArrowBack, IoMdEyeOff, IoIosEye } from "react-icons/io";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
+import { UserDetails } from "../../store/slices/auth-slice/authSlice-types";
+import { useAppSelector } from "../../hooks";
+import { voidFunc } from "../../interfaces/general";
 
 interface LoginProps {
-  setEmail: Dispatch<SetStateAction<string>>;
-  setPassword: Dispatch<SetStateAction<string>>;
+  setValues: Dispatch<SetStateAction<UserDetails>>;
+  values: UserDetails;
   loading: boolean;
-  error: string;
-  loginFunc: any;
+  error: boolean;
+  loginFunc: voidFunc;
 }
 
 const Login = ({
   error,
-  setPassword,
-  setEmail,
+  setValues,
+  values,
   loading,
   loginFunc,
 }: LoginProps) => {
   const [type, setType] = useState("password");
   const [icon, setIcon] = useState(<IoIosEye />);
+
+  const { errorMessage } = useAppSelector((state) => state.auth);
 
   const handleToggle = () => {
     if (type === "password") {
@@ -34,19 +36,28 @@ const Login = ({
     }
   };
 
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+
+    setValues({
+      ...values,
+      [name]: value.trim(),
+    });
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     loginFunc();
   };
 
   return (
-    <div className="eddyContainer">
+    <div className="eddyContainer h-[110vh] overflow-y-scroll scrollbar-hide">
       <Link to="/">
         <div className="flex space-x-1 items-center mt-5 text-xl font-bold">
-          <div>
+          <h4>
             <IoIosArrowBack />
-          </div>
-          <h2>Home</h2>
+          </h4>
+          <h4>Home</h4>
         </div>
       </Link>
       <div className="flex-col justify-center items-center  mt-14 px-6  md:w-[35%] mx-auto">
@@ -57,7 +68,11 @@ const Login = ({
           Never miss the fun...
         </p>
         <form className="mt-6" onSubmit={handleSubmit}>
-          {error && <div className="text-xl text-red-500 mb-3">{error}</div>}
+          {error ? (
+            <div className="text-xl text-red-500 mb-3">{errorMessage}</div>
+          ) : (
+            ""
+          )}
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
             <div className="my-3">
               <label htmlFor="exampleInputEmail1" className="font-normal">
@@ -71,7 +86,8 @@ const Login = ({
                 className="block mt-2 w-full rounded-xl p-2"
                 required
                 whileFocus={{ scale: 1.1 }}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                onChange={handleChange}
               ></motion.input>
             </div>
           </motion.div>
@@ -89,7 +105,8 @@ const Login = ({
                   autoComplete="off"
                   required
                   minLength={8}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
+                  onChange={handleChange}
                 />
                 <button
                   type="button"
@@ -112,7 +129,7 @@ const Login = ({
               }`}
               disabled={loading}
             >
-              {loading ? "logging in....." : "login"}
+              {loading ? "..." : "Login"}
             </button>
           </motion.div>
 

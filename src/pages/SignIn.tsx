@@ -1,49 +1,45 @@
 import Login from "../components/signInForm";
-import { useState } from "react";
-import api from "../api-url";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { authActions, login } from "../store/slices/auth-slice";
+import { UserDetails } from "../store/slices/auth-slice/authSlice-types";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useAppDispatch();
+  const [displayErrorMessage, setDisplayErrorMessage] = useState(false);
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const loginFunc = async (e: any) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${api}/v1/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email, password: password }),
-      });
-      const data = await response.json();
+  const { isLoggedIn, loading } = useAppSelector((state) => state.auth);
 
-      if (response.status === 200) {
-        setError("");
-        setLoading(false);
-        navigate("/");
-      } else {
-        setError(data.message);
-        return setLoading(false);
-      }
-    } catch (error) {
-      console.error(error);
-      setError("Check your internet connection and try again...");
-      return setLoading(false);
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    setDisplayErrorMessage(false);
+    dispatch(authActions.deleteError());
+    if (isLoggedIn && pathname === "/sign-in") {
+      navigate("/admin");
     }
+  }, [isLoggedIn]);
+
+  const [values, setValues] = useState<UserDetails>({
+    email: "",
+    password: "",
+  });
+
+  // Handles submit
+  const handleSubmit = async () => {
+    dispatch(login(values));
+    setDisplayErrorMessage(true);
   };
 
   return (
     <Login
-      error={error}
+      error={displayErrorMessage}
       loading={loading}
-      setPassword={setPassword}
-      setEmail={setEmail}
-      loginFunc={loginFunc}
+      values={values}
+      setValues={setValues}
+      loginFunc={handleSubmit}
     />
   );
 };
