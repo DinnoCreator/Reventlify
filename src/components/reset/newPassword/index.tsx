@@ -45,7 +45,7 @@ const NewPassword = ({
           }`}
           disabled={loading}
         >
-          {loading ? "Creating....." : "Create"}
+          {loading ? "Creating..." : "Create"}
         </button>
       </motion.div>
     </div>
