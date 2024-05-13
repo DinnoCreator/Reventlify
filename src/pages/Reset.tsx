@@ -1,18 +1,138 @@
 import { IoIosArrowBack } from "react-icons/io";
-import { motion } from "framer-motion";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import api from "../api-url";
+import VerifyEmail from "../components/reset/verifyEmail";
+import InputOtp from "../components/reset/inputOtp";
+import NewPassword from "../components/reset/newPassword";
 
 const Reset = () => {
   const [verifyEmail, setVerifyEmail] = useState(false);
   const [resetPassword, setResetPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const Reseter = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  // Send OTP
+  const verifyEmailFunc = async (e: any) => {
     e.preventDefault();
-    if (!verifyEmail) {
-      setVerifyEmail(true);
-    } else if (verifyEmail) {
-      setResetPassword(true);
+    setLoading(true);
+    try {
+      const response = await fetch(`${api}/v1/auth/pw-reset-code`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email }),
+      });
+      const data = await response.json();
+
+      if (response.status === 200) {
+        setError("");
+        setLoading(false);
+        return setVerifyEmail(true);
+      } else {
+        setError(data.message);
+        return setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Check your internet connection and try again...");
+      return setLoading(false);
+    }
+  };
+
+  // Verify OTP
+  const verifyOtpFunc = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await fetch(`${api}/v1/auth/pw-reset-code/verify`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email, code: code }),
+      });
+      const data = await response.json();
+
+      if (response.status === 200) {
+        setError("");
+        setLoading(false);
+
+        return setResetPassword(true);
+      } else {
+        setError(data.message);
+        return setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Check your internet connection and try again...");
+      return setLoading(false);
+    }
+  };
+
+  // Set new password
+  const newPasswordFunc = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await fetch(`${api}/v1/auth/pw-reset`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email, password: newPassword }),
+      });
+      const data = await response.json();
+
+      if (response.status === 200) {
+        setError("");
+        setLoading(false);
+        navigate("/sign-in");
+      } else {
+        setError(data.message);
+        return setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Check your internet connection and try again...");
+      return setLoading(false);
+    }
+  };
+
+  // Components to display
+  const resetOtpDisplay = () => {
+    if (verifyEmail && !resetPassword) {
+      return (
+        <InputOtp
+          error={error}
+          loading={loading}
+          setCode={setCode}
+          verifyOtpFunc={verifyOtpFunc}
+        />
+      );
+    } else if (verifyEmail && resetPassword) {
+      return (
+        <NewPassword
+          setNewPassword={setNewPassword}
+          newPasswordFunc={newPasswordFunc}
+          loading={loading}
+          error={error}
+        />
+      );
+    } else {
+      return (
+        <VerifyEmail
+          setEmail={setEmail}
+          verifyEmailFunc={verifyEmailFunc}
+          loading={loading}
+          error={error}
+        />
+      );
     }
   };
 
@@ -30,71 +150,10 @@ const Reset = () => {
         <h2 className="md:text-3xl text-2xl font-bold text-blue-600 text-center mb-2">
           Reventlify
         </h2>
-        <p className="md:text-2xl text-xl text-center font-bold ">Never miss the fun...</p>
-        <form className="mt-6">
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
-            <div className="my-2">
-              {verifyEmail && !resetPassword ? (
-                <>
-                  <label htmlFor="exampleOTP" className="font-bold">Input OTP</label>
-                  <motion.input
-                    type="text"
-                    id="exampleOTP"
-                    autoComplete="off"
-                    aria-describedby="emailHelp"
-                    className="block mt-2 w-full rounded-xl p-2"
-                    required
-                    whileFocus={{ scale: 1.1 }}
-                  ></motion.input>
-                </>
-              ) : verifyEmail && resetPassword ? (
-                <>
-                  <label htmlFor="exampleInputEmail1" className="font-bold">
-                    Create new password
-                  </label>
-                  <motion.input
-                    type="password"
-                    id="exampleInputEmail1"
-                    autoComplete="off"
-                    aria-describedby="emailHelp"
-                    className="block mt-2 w-full rounded-xl p-2"
-                    required
-                    whileFocus={{ scale: 1.1 }}
-                  ></motion.input>
-                </>
-              ) : (
-                <>
-                  <label htmlFor="exampleInputEmail1" className="font-bold">Email address</label>
-                  <motion.input
-                    type="email"
-                    id="exampleInputEmail1"
-                    autoComplete="off"
-                    aria-describedby="emailHelp"
-                    className="block mt-2 w-full rounded-xl p-2"
-                    required
-                    whileFocus={{ scale: 1.1 }}
-                  ></motion.input>
-                </>
-              )}
-            </div>
-          </motion.div>
-
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 1.0 }}>
-            <div>
-              <button
-                onClick={Reseter}
-                type="submit"
-                className="text-center text-white px-2 py-2 bg-blue-600 rounded-xl my-6 w-full"
-              >
-                {verifyEmail && !resetPassword
-                  ? "Verify OTP"
-                  : verifyEmail && resetPassword
-                  ? "Set new password"
-                  : "Send OTP"}
-              </button>
-            </div>
-          </motion.div>
-        </form>
+        <p className="md:text-2xl text-xl text-center font-bold ">
+          Never miss the fun...
+        </p>
+        <form className="mt-6">{resetOtpDisplay()}</form>
       </div>
     </div>
   );
